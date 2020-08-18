@@ -129,10 +129,10 @@ def num_mnp_request(num):
             print(f'{YELLOW}{BOLD}[!] {LI_G}Оператор/Город:{F_CL} Неизвестно {RESET}')
             # print(f'{PINK}{BOLD}[!] {RED}Данные Оператор/Город не найдены{RESET}')
         print(f'\n{PINK}{BOLD}[!] {RED}Всего лимитов: {num_data["limit"]}{RESET}')
-    except requests.exceptions.RequestException:
-        sys.exit(f'{YELLOW}{BOLD}[!] {RED}Для проверки MNP включите VPN и перезапустите скрипт.{RESET}')
-    except ValueError:
-        sys.exit(f'{YELLOW}{BOLD}[!] {RED}Для проверки MNP включите VPN и перезапустите скрипт.{RESET}')
+    except (requests.exceptions.RequestException, ValueError):
+        print(f'{YELLOW}{BOLD}[!] {RED}Для проверки MNP включите VPN и перезапустите скрипт.{RESET}')
+        sleep(3)
+        sys.exit()
 
 
 def save(names):
@@ -249,6 +249,7 @@ if choice == '1':
             # print(f'{CYAN}{BOLD}[!] {RED}Данные Город/Локация не найдены{RESET}')
         print(f'\n{CYAN}{BOLD}[!] {RED}Всего лимитов: {ip_data.get("limit")}{RESET}')
 
+    sleep(3)
     exit()
 elif choice == '2':
     clear()
@@ -275,8 +276,9 @@ if number.isdigit():
     if number[0] == '8':
         number = '7' + number[1:]
 else:
+    print(f'{YELLOW}{BOLD}[!] {RED}"{RESET}{number}{RED}" - Не является номером\n{RESET}')
     sleep(3)
-    exit(f'{YELLOW}{BOLD}[!] {RED}"{RESET}{number}{RED}" - Не является номером\n{RESET}')
+    exit()
 
 fileD = open('dataFile.txt', 'a', encoding='utf-8')
 try:
@@ -443,8 +445,8 @@ try:
     print(f'{YELLOW}{BOLD}[!] {RED}Всего лимитов: {data["limit"]}{RESET}')
 
 except requests.exceptions.RequestException:
-    sys.exit(
-        f'{YELLOW}{BOLD}[!] {RED}Для проверки номера включите VPN и перезапустите скрипт.{RESET}')
+    print(f'{YELLOW}{BOLD}[!] {RED}Для проверки номера включите VPN и перезапустите скрипт.{RESET}')
+    sys.exit()
 except ValueError:  # json.decoder.JSONDecodeError
     pass
     # sys.exit(f'{YELLOW}{BOLD}[!] {RED}Для проверки номера включите VPN и перезапустите скрипт.{RESET}')
